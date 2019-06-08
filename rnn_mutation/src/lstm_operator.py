@@ -6,10 +6,11 @@ import keras.backend as K
 # import state_save as ss
 import sys
 # sys.path.append('.')
-from keras.layers import recurrent
+from .keras.layers import recurrent
 
 # from ..src import recurrent
-import state_save as ss
+# import state_save as ss
+from ..src import state_save as ss
 # import rnn_mutation.src.state_save as ss
 import gc
 
@@ -722,38 +723,6 @@ def gaussian_fuzzing(mean, std, weight):
         :return: weight after fuzzing
         """
     return (1 / np.sqrt(2 * np.pi) * std) * np.exp(-(weight - mean) ** 2 / (2 * std ** 2))
-
-
-def return_operator_name(int_operator):
-    """
-
-    :param int_operator:
-    :return:
-    """
-    if int_operator == 1:
-        return "SSC"
-    elif int_operator == 2:
-        return "SR"
-    elif int_operator == 3:
-        return "SGF"
-    elif int_operator == 4:
-        return "SPR"
-    elif int_operator == 5:
-        return "DGC"
-    elif int_operator == 6:
-        return "DGGF"
-    elif int_operator == 7:
-        return "DGPR"
-    elif int_operator == 8:
-        return "SGGF"
-    elif int_operator == 9:
-        return "SGPR"
-    elif int_operator == 10:
-        return "WGF"
-    elif int_operator == 11:
-        return "WQ"
-    else:
-        return "WPR"
 
 
 def return_lstm_gate_name(int_gate):

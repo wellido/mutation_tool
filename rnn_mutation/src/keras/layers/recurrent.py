@@ -7,7 +7,8 @@ from __future__ import print_function
 
 import numpy as np
 import warnings
-import state_save as ss
+# import state_save as ss
+from ... import state_save as ss
 from .. import backend as K
 from .. import activations
 from .. import initializers

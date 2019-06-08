@@ -36,3 +36,54 @@ def random_select(total_num, select_num, layer_list, layer_dict):
             process_num_total += num
             process_num_list.append(num)
     return process_num_list
+
+
+def cnn_operator_name(int_operator):
+    if int_operator == 0:
+        return 'GF'
+    elif int_operator == 1:
+        return 'WS'
+    elif int_operator == 2:
+        return 'NEB'
+    elif int_operator == 3:
+        return 'NAI'
+    elif int_operator == 4:
+        return 'NS'
+    elif int_operator == 5:
+        return 'LR'
+    elif int_operator == 6:
+        return 'LA'
+    else:
+        return 'LD'
+
+
+def rnn_operator_name(int_operator):
+    """
+
+        :param int_operator:
+        :return:
+        """
+    if int_operator == 1:
+        return "SSC"
+    elif int_operator == 2:
+        return "SR"
+    elif int_operator == 3:
+        return "SGF"
+    elif int_operator == 4:
+        return "SPR"
+    elif int_operator == 5:
+        return "DGC"
+    elif int_operator == 6:
+        return "DGGF"
+    elif int_operator == 7:
+        return "DGPR"
+    elif int_operator == 8:
+        return "SGGF"
+    elif int_operator == 9:
+        return "SGPR"
+    elif int_operator == 10:
+        return "WGF"
+    elif int_operator == 11:
+        return "WQ"
+    else:
+        return "WPR"
