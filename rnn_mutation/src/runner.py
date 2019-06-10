@@ -4,6 +4,7 @@ from utils import *
 import csv
 from keras.models import load_model
 import argparse
+from progressbar import *
 
 
 def dynamic_runner(model_path, layer_name, rnn_cell_index, operation, data_path, layer_type,
@@ -68,67 +69,45 @@ def static_runner(model_path, save_path, mutant_operator, layer_type, layer_name
 
     if mutant_operator == 8 or mutant_operator == 9:
         if layer_type == "lstm":
-            acc_mutant = 0
-            while acc_mutant < acc_threshold:
-                model = load_model(model_path)
-                lstm_operator(model, layer_name, mutant_operator, None, gate_type=gate_type,
-                              precision_num=precision_num, standard_deviation=standard_deviation)
-                (x_train, y_train), (x_test, y_test) = data_preprocess("imdb")
-                _, acc_mutant = model_QC(model, x_test, y_test, 32)
-                print("threshold: ", acc_threshold)
-                print("mutated model acc: ", acc_mutant)
+            model = load_model(model_path)
+            lstm_operator(model, layer_name, mutant_operator, None, gate_type=gate_type,
+                          precision_num=precision_num, standard_deviation=standard_deviation)
 
-            full_save_path = save_path + "/" + return_operator_name(mutant_operator) + "_" + \
-                             return_lstm_gate_name(gate_type) + "_" + str(precision_num) + "_" + \
-                             str(standard_deviation) + "_" + str(num) + ".h5"
         elif layer_type == "gru":
-            acc_mutant = 0
-            while acc_mutant < acc_threshold:
-                model = load_model(model_path)
-                gru_operator(model, layer_name, mutant_operator, None, gate_type=gate_type,
-                              precision_num=precision_num, standard_deviation=standard_deviation)
-                (x_train, y_train), (x_test, y_test) = data_preprocess("imdb")
-                _, acc_mutant = model_QC(model, x_test, y_test, 32, threshold=acc_threshold)
-                print("threshold: ", acc_threshold)
-                print("mutated model acc: ", acc_mutant)
-
-            full_save_path = save_path + "/" + return_operator_name(mutant_operator) + "_" + \
-                             return_gru_gate_name(gate_type) + "_" + str(precision_num) + "_" + \
-                             str(standard_deviation) + "_" + str(num) + ".h5"
+            model = load_model(model_path)
+            gru_operator(model, layer_name, mutant_operator, None, gate_type=gate_type,
+                          precision_num=precision_num, standard_deviation=standard_deviation)
 
     elif mutant_operator == 10 or mutant_operator == 11 or mutant_operator == 12:
         if layer_type == "lstm":
-            while 1:
+            i = 1
+            p_bar = ProgressBar().start()
+            while i <= num:
                 model = load_model(model_path)
                 lstm_operator(model, layer_name, mutant_operator, None, gate_type=gate_type, ratio=ratio,
                               standard_deviation=standard_deviation, precision_num=precision_num)
-                (x_train, y_train), (x_test, y_test) = data_preprocess("imdb")
-                _, acc_mutant = model_QC(model, x_test, y_test, 32, threshold=acc_threshold)
-                print("threshold: ", acc_threshold)
-                print("mutated model acc: ", acc_mutant)
-                if acc_mutant > acc_threshold:
-                    break
-
-            full_save_path = save_path + "/" + return_operator_name(mutant_operator) + "_" + \
-                             return_lstm_gate_name(gate_type) + "_" + str(ratio) + "_" + \
-                             str(precision_num) + "_" + str(standard_deviation) + "_" + str(num) + ".h5"
+                full_save_path = save_path + "/" + return_operator_name(mutant_operator) + "_" + \
+                                 return_lstm_gate_name(gate_type) + "_" + str(ratio) + "_" + \
+                                 str(precision_num) + "_" + str(standard_deviation) + "_" + str(i) + ".h5"
+                p_bar.update(int((i / num) * 100))
+                model.save(full_save_path)
+                i += 1
+            p_bar.finish()
         elif layer_type == "gru":
-            # while 1:
-            model = load_model(model_path)
-            gru_operator(model, layer_name, mutant_operator, None, gate_type=gate_type, ratio=ratio,
-                         precision_num=precision_num, standard_deviation=standard_deviation)
-                # (x_train, y_train), (x_test, y_test) = data_preprocess("imdb")
-                # _, acc_mutant = model_QC(model, x_test, y_test, 32, threshold=acc_threshold)
-                # print("threshold: ", acc_threshold)
-                # print("mutated model acc: ", acc_mutant)
-                # if acc_mutant > acc_threshold:
-                #     break
+            i = 1
+            p_bar = ProgressBar().start()
+            while i <= num:
+                model = load_model(model_path)
+                gru_operator(model, layer_name, mutant_operator, None, gate_type=gate_type, ratio=ratio,
+                             precision_num=precision_num, standard_deviation=standard_deviation)
 
-            full_save_path = save_path + "/gru_" + return_operator_name(mutant_operator) + "_" + \
-                             return_gru_gate_name(gate_type) + "_" + str(ratio) + "_" + \
-                             str(precision_num) + "_" + str(standard_deviation) + "_" + str(num) + ".h5"
-
-    model.save(full_save_path)
+                full_save_path = save_path + "/gru_" + return_operator_name(mutant_operator) + "_" + \
+                                 return_gru_gate_name(gate_type) + "_" + str(ratio) + "_" + \
+                                 str(precision_num) + "_" + str(standard_deviation) + "_" + str(num) + ".h5"
+                p_bar.update(int((i / num) * 100))
+                model.save(full_save_path)
+                i += 1
+            p_bar.finish()
 
 
 def run():
@@ -139,8 +118,6 @@ def run():
                         help="model path")
     parser.add_argument("--save_path", type=str,
                         help="model save path")
-    parser.add_argument("--mutants_number", type=int,
-                        help="mutants generation number")
     parser.add_argument("--operator", type=int,
                         help="operator")
     parser.add_argument("--single_data_path", type=str, default=" ",
@@ -174,7 +151,6 @@ def run():
     operator_type = args.operator_type
     model_path = args.model_path
     save_path = args.save_path
-    mutants_number = args.mutants_number
     operator = args.operator
     print("operator number: ", operator)
     single_data_path = args.single_data_path
@@ -192,9 +168,9 @@ def run():
     standard_deviation = args.standard_deviation
     if layer_type == "lstm":
         if operator_type == "static":
-            static_runner(model_path, save_path, operator, layer_type, layer_name, ratio=ratio,
+            static_runner(model_path, save_path, operator, layer_type, layer_name, num, ratio=ratio,
                           acc_threshold=acc_threshold, gate_type=gate_type,
-                          precision_num=precision_num, standard_deviation=standard_deviation, num=num)
+                          precision_num=precision_num, standard_deviation=standard_deviation)
 
         else:
             original_result, mutant_result = dynamic_runner(model_path, layer_name, rnn_cell_index, operator,
@@ -225,9 +201,9 @@ def run():
     elif layer_type == "gru":
         if operator_type == "static":
             print("######")
-            static_runner(model_path, save_path, operator, layer_type, layer_name, ratio=ratio,
+            static_runner(model_path, save_path, operator, layer_type, layer_name, num, ratio=ratio,
                           gate_type=gate_type, acc_threshold=acc_threshold,
-                          precision_num=precision_num, standard_deviation=standard_deviation, num=num)
+                          precision_num=precision_num, standard_deviation=standard_deviation)
         else:
             original_result, mutant_result = dynamic_runner(model_path, layer_name, rnn_cell_index, operator,
                                                             single_data_path, layer_type, time_stop_step=time_stop_step,
@@ -259,7 +235,7 @@ def run():
 if __name__ == '__main__':
     run()
 
-    # python runner.py --operator_type static --model_path /Users/krogq/RNNMutaion/models/imdb_lstm.h5 --save_path /Users/krogq/RNNMutaion/generated_model --mutants_number 100 --operator 10 --layer_type lstm --layer_name lstm_1 --ratio 0.05 --gate_type 2 --standard_deviation 0.1
+    # python runner.py --operator_type static --model_path ../../models/imdb_lstm.h5 --save_path ../../mutants --num 2 --operator 10 --layer_type lstm --layer_name lstm_1 --ratio 0.05 --gate_type 2 --standard_deviation 0.1
     # python runner.py --operator_type dynamic --model_path ../../models/imdb_lstm.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path ../../data/select_data.npz --standard_deviation 1.0 --precision_num 1 --time_stop_step 40 --csv_path "../result/test.csv"
     # python runner.py --operator_type dynamic --model_path /Users/krogq/RNNMutaion/models/imdb_gru.h5 --layer_type gru --layer_name gru_1 --rnn_cell_index 1 --operator 1 --single_data_path /Users/krogq/RNNMutaion/data/select_data.npz --time_stop_step 40 --csv_path "../result/gru_test.csv"
     # python runner.py --operator_type dynamic --model_path /Users/krogq/RNNMutaion/models/babi_rnn_q2_epoch20.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path /Users/krogq/RNNMutaion/data/babi_select_data.npz --time_stop_step 40 --csv_path "../result/babi_lstm_test.csv"

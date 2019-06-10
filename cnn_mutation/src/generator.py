@@ -61,7 +61,7 @@ def generator():
         if i != 1:
             model = load_model(model_path)
         new_model = cnn_mutants_generation(model, operator, ratio, standard_deviation)
-        final_path = save_path + "/" + cnn_operator_name(operator) + "_" + str(ratio) + "_" + str(i)
+        final_path = save_path + "/" + cnn_operator_name(operator) + "_" + str(ratio) + "_" + str(i) + ".h5"
         new_model.save(final_path)
         p_bar.update(int((i / num) * 100))
         i += 1

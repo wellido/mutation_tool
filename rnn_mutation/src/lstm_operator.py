@@ -675,33 +675,32 @@ def weights_process(model, layer_name, gate_type, ratio, func, standard_deviatio
     bias = layer_weights[2]
     units_number = model.get_layer(layer_name).get_config()['units']
     if gate_type == 0:
-        print(standard_deviation)
         input_weights[:, :units_number] = func(input_weights[:, :units_number], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
         state_weights[:, :units_number] = func(state_weights[:, :units_number], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
         bias[:units_number] = func(bias[:units_number], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
 
     elif gate_type == 1:
         input_weights[:, units_number:  units_number * 2] = func(
-            input_weights[:, units_number:  units_number * 2], ratio, precision_num, standard_deviation=standard_deviation, precision_num=precision_num)
+            input_weights[:, units_number:  units_number * 2], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
         state_weights[:, units_number: units_number * 2] = func(
-            state_weights[:, units_number: units_number * 2], ratio, precision_num, standard_deviation=standard_deviation, precision_num=precision_num)
-        bias[units_number: units_number * 2] = func(bias[units_number: units_number * 2], ratio, precision_num, standard_deviation=standard_deviation, precision_num=precision_num)
+            state_weights[:, units_number: units_number * 2], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
+        bias[units_number: units_number * 2] = func(bias[units_number: units_number * 2], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
 
     elif gate_type == 2:
         input_weights[:, units_number * 2: units_number * 3] = func(
-            input_weights[:, units_number * 2: units_number * 3], ratio, precision_num, standard_deviation=standard_deviation, precision_num=precision_num)
+            input_weights[:, units_number * 2: units_number * 3], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
         state_weights[:, units_number * 2: units_number * 3] = func(
-            state_weights[:, units_number * 2: units_number * 3], ratio, precision_num, standard_deviation=standard_deviation, precision_num=precision_num)
+            state_weights[:, units_number * 2: units_number * 3], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
         bias[units_number * 2: units_number * 3] = func(bias[units_number * 2: units_number * 3],
-                                                                            ratio, precision_num, standard_deviation=standard_deviation, precision_num=precision_num)
+                                                                            ratio, standard_deviation=standard_deviation, precision_num=precision_num)
 
     elif gate_type == 3:
         input_weights[:, units_number * 3:] = func(
-            input_weights[:, units_number * 3:], ratio, precision_num, standard_deviation=standard_deviation, precision_num=precision_num)
+            input_weights[:, units_number * 3:], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
         state_weights[:, units_number * 3:] = func(
-            state_weights[:, units_number * 3:], ratio, precision_num, standard_deviation=standard_deviation, precision_num=precision_num)
+            state_weights[:, units_number * 3:], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
         bias[units_number * 3:] = func(
-            bias[units_number * 3:], ratio, precision_num, standard_deviation=standard_deviation, precision_num=precision_num)
+            bias[units_number * 3:], ratio, standard_deviation=standard_deviation, precision_num=precision_num)
 
     elif gate_type == 4:
         input_weights = func(input_weights, ratio, precision_num=precision_num, standard_deviation=standard_deviation)
