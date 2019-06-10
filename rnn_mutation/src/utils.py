@@ -262,3 +262,35 @@ def model_QC(model, x_test, y_test, batch_size):
     print('Test score:', score)
     print('Test accuracy:', acc)
     return score, acc
+
+
+def return_operator_name(int_operator):
+    """
+    :param int_operator:
+    :return:
+    """
+    if int_operator == 1:
+        return "SSC"
+    elif int_operator == 2:
+        return "SR"
+    elif int_operator == 3:
+        return "SGF"
+    elif int_operator == 4:
+        return "SPR"
+    elif int_operator == 5:
+        return "DGC"
+    elif int_operator == 6:
+        return "DGGF"
+    elif int_operator == 7:
+        return "DGPR"
+    elif int_operator == 8:
+        return "SGGF"
+    elif int_operator == 9:
+        return "SGPR"
+    elif int_operator == 10:
+        return "WGF"
+    elif int_operator == 11:
+        return "WQ"
+    else:
+        return "WPR"
+

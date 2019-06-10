@@ -1,6 +1,6 @@
-from .gru_operator import *
-from .lstm_operator import *
-from .utils import *
+from gru_operator import *
+from lstm_operator import *
+from utils import *
 import csv
 from keras.models import load_model
 import argparse
@@ -260,6 +260,6 @@ if __name__ == '__main__':
     run()
 
     # python runner.py --operator_type static --model_path /Users/krogq/RNNMutaion/models/imdb_lstm.h5 --save_path /Users/krogq/RNNMutaion/generated_model --mutants_number 100 --operator 10 --layer_type lstm --layer_name lstm_1 --ratio 0.05 --gate_type 2 --standard_deviation 0.1
-    # python runner.py --operator_type dynamic --model_path /Users/krogq/RNNMutaion/models/imdb_lstm.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path /Users/krogq/RNNMutaion/data/select_data.npz --standard_deviation 1.0 --precision_num 1 --time_stop_step 40 --csv_path "../result/test.csv"
+    # python runner.py --operator_type dynamic --model_path ../../models/imdb_lstm.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path ../../data/select_data.npz --standard_deviation 1.0 --precision_num 1 --time_stop_step 40 --csv_path "../result/test.csv"
     # python runner.py --operator_type dynamic --model_path /Users/krogq/RNNMutaion/models/imdb_gru.h5 --layer_type gru --layer_name gru_1 --rnn_cell_index 1 --operator 1 --single_data_path /Users/krogq/RNNMutaion/data/select_data.npz --time_stop_step 40 --csv_path "../result/gru_test.csv"
     # python runner.py --operator_type dynamic --model_path /Users/krogq/RNNMutaion/models/babi_rnn_q2_epoch20.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path /Users/krogq/RNNMutaion/data/babi_select_data.npz --time_stop_step 40 --csv_path "../result/babi_lstm_test.csv"

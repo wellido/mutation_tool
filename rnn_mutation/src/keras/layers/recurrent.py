@@ -7,8 +7,8 @@ from __future__ import print_function
 
 import numpy as np
 import warnings
-# import state_save as ss
-from ... import state_save as ss
+import state_save as ss
+# from ... import state_save as ss
 from .. import backend as K
 from .. import activations
 from .. import initializers
@@ -1637,6 +1637,8 @@ class GRU(RNN):
     def call(self, inputs, mask=None, training=None, initial_state=None):
         self.cell._dropout_mask = None
         self.cell._recurrent_dropout_mask = None
+        print("special_initial: ", special_initial)
+        print("rnn_cell_index: ", rnn_cell_index)
         if special_initial == rnn_cell_index:
             hidden_cell = ss.hidden_cell
             cell_len = len(hidden_cell)

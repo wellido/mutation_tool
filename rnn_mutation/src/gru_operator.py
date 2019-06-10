@@ -1,4 +1,4 @@
-from .lstm_operator import *
+from lstm_operator import *
 
 
 def gru_operator(model, layer_name, operation, x_test, rnn_cell_index=1, ratio=0.01, gate_type=0, time_stop_step=0,

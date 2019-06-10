@@ -6,11 +6,11 @@ import keras.backend as K
 # import state_save as ss
 import sys
 # sys.path.append('.')
-from .keras.layers import recurrent
+from keras.layers import recurrent
 
 # from ..src import recurrent
-# import state_save as ss
-from ..src import state_save as ss
+import state_save as ss
+# from ..src import state_save as ss
 # import rnn_mutation.src.state_save as ss
 import gc
 

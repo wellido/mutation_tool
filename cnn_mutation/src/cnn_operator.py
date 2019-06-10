@@ -2,7 +2,7 @@ from keras.models import Sequential
 import numpy as np
 import random
 import keras
-from .utils import get_type_layers, find_sameshape_layer, summary_model
+from utils import get_type_layers, find_sameshape_layer, summary_model
 
 
 def cnn_operator(model, operator, ratio, standard_deviation=0.5):
@@ -25,13 +25,6 @@ def cnn_operator(model, operator, ratio, standard_deviation=0.5):
     weight_count, neuron_count, weights_dict, neuron_dict = summary_model(model)
     process_weights_num = int(weight_count * ratio) if int(weight_count * ratio) > 0 else 1
     process_neuron_num = int(neuron_count * ratio) if int(neuron_count * ratio) > 0 else 1
-    if operator == 0:
-        print("total weights: ", weight_count)
-        print("process weights num: ", process_weights_num)
-    else:
-        print("total neuron: ", neuron_count)
-        print("process neuron num: ", process_neuron_num)
-
     if operator == 0:
         # GF
         process_num_list = random_select(weight_count, process_weights_num, dense_con_layer_list, weights_dict)
@@ -346,3 +339,27 @@ def bias_change(bias, op, scale):
     elif op == 2:
         bias = bias * scale
     return bias
+
+
+def cnn_operator_name(int_operator):
+    """
+
+    :param int_operator:
+    :return:
+    """
+    if int_operator == 0:
+        return 'GF'
+    elif int_operator == 1:
+        return 'WS'
+    elif int_operator == 2:
+        return 'NEB'
+    elif int_operator == 3:
+        return 'NAI'
+    elif int_operator == 4:
+        return 'NS'
+    elif int_operator == 5:
+        return 'LR'
+    elif int_operator == 6:
+        return 'LA'
+    else:
+        return 'LD'
