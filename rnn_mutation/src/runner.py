@@ -35,7 +35,6 @@ def dynamic_runner(model_path, layer_name, rnn_cell_index, operation, data_path,
     x_test.append(select_data["x_select"])
     if len(select_data) == 3:
         x_test.append(select_data["xq_select"])
-    y_test = select_data["y_select"]
     if layer_type == "lstm":
         result = lstm_operator(model, layer_name, operation, x_test, rnn_cell_index=rnn_cell_index, time_stop_step=time_stop_step,
                                gate_type=gate_type, ratio=ratio, time_start_step=time_start_step, batch_size=batch_size,
@@ -200,7 +199,6 @@ def run():
 
     elif layer_type == "gru":
         if operator_type == "static":
-            print("######")
             static_runner(model_path, save_path, operator, layer_type, layer_name, num, ratio=ratio,
                           gate_type=gate_type, acc_threshold=acc_threshold,
                           precision_num=precision_num, standard_deviation=standard_deviation)
@@ -234,8 +232,7 @@ def run():
 # ../models/imdb_lstm.h5
 if __name__ == '__main__':
     run()
-
     # python runner.py --operator_type static --model_path ../../models/imdb_lstm.h5 --save_path ../../mutants --num 2 --operator 10 --layer_type lstm --layer_name lstm_1 --ratio 0.05 --gate_type 2 --standard_deviation 0.1
-    # python runner.py --operator_type dynamic --model_path ../../models/imdb_lstm.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path ../../data/select_data.npz --standard_deviation 1.0 --precision_num 1 --time_stop_step 40 --csv_path "../result/test.csv"
+    # python runner.py --operator_type dynamic --model_path ../../models/imdb_lstm.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path ../../data/select_data.npz --standard_deviation 1.0 --precision_num 1 --time_stop_step 78 --csv_path "../../result/test.csv"
     # python runner.py --operator_type dynamic --model_path /Users/krogq/RNNMutaion/models/imdb_gru.h5 --layer_type gru --layer_name gru_1 --rnn_cell_index 1 --operator 1 --single_data_path /Users/krogq/RNNMutaion/data/select_data.npz --time_stop_step 40 --csv_path "../result/gru_test.csv"
     # python runner.py --operator_type dynamic --model_path /Users/krogq/RNNMutaion/models/babi_rnn_q2_epoch20.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path /Users/krogq/RNNMutaion/data/babi_select_data.npz --time_stop_step 40 --csv_path "../result/babi_lstm_test.csv"

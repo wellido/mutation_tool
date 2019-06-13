@@ -15,11 +15,30 @@ def color_preprocessing(x_train, x_test, mean, std):
     """
     x_train = x_train.astype('float32')
     x_test = x_test.astype('float32')
-    for i in range(x_train.shape[3]):
-        x_train[:, :, :, i] = (x_train[:, :, :, i] - mean[i]) / std[i]
-    for i in range(x_test.shape[3]):
-        x_test[:, :, :, i] = (x_test[:, :, :, i] - mean[i]) / std[i]
+    if len(x_train.shape) == 4:
+        for i in range(x_train.shape[3]):
+            x_train[:, :, :, i] = (x_train[:, :, :, i] - mean[i]) / std[i]
+        for i in range(x_test.shape[3]):
+            x_test[:, :, :, i] = (x_test[:, :, :, i] - mean[i]) / std[i]
+    elif len(x_train.shape) == 3:
+        x_train = (x_train - mean) / std
+        x_test = (x_test - mean) / std
     return x_train, x_test
+
+
+def model_predict(model, x, y):
+    """
+
+    :param model:
+    :param x:
+    :param y:
+    :return:
+    """
+    y_p = model.predict(x)
+    y_p_class = np.argmax(y_p, axis=1)
+    correct = np.sum(y.flatten() == y_p_class.flatten())
+    acc = float(correct) / len(x)
+    return acc
 
 
 def load_preprocessed_data(data, mean, std):
