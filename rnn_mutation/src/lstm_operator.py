@@ -1,17 +1,8 @@
 from keras.models import Model, load_model
 import numpy as np
 import keras.backend as K
-# from keras.layers import recurrent
-# import recurrent
-# import state_save as ss
-import sys
-# sys.path.append('.')
 from keras.layers import recurrent
-
-# from ..src import recurrent
 import state_save as ss
-# from ..src import state_save as ss
-# import rnn_mutation.src.state_save as ss
 import gc
 
 
@@ -545,6 +536,8 @@ def dynamic_gate_process(model, layer_name, x_test, time_stop_step, op, standard
     :param standard_deviation:
     :return:
     """
+    x_test = x_test[0]
+    original_result = model.predict(x_test.reshape(1, 80))
     layer_index = return_layer_index(model.layers, layer_name)
     new_model = Model(inputs=model.input, outputs=model.layers[layer_index].output)
     input_length = len(x_test)
@@ -587,7 +580,7 @@ def dynamic_gate_process(model, layer_name, x_test, time_stop_step, op, standard
     # del new_initial_model
     # K.clear_session()
     # gc.collect()
-    return new_result
+    return original_result, new_result
 
 
 def weights_gaussian_fuzzing(weights, ratio, standard_deviation=0.5, precision_num=2):

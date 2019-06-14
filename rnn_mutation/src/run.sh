@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+python runner.py --operator_type static --model_path ../../models/imdb_lstm.h5 --save_path ../../../lstm-mutants --num 100 --operator 12 --layer_type lstm --layer_name lstm_1 --ratio 0.05 --gate_type 0 --standard_deviation 0.1
+python runner.py --operator_type static --model_path ../../models/imdb_lstm.h5 --save_path ../../../lstm-mutants --num 100 --operator 12 --layer_type lstm --layer_name lstm_1 --ratio 0.05 --gate_type 0 --standard_deviation 0.1
+python runner.py --operator_type static --model_path ../../models/imdb_lstm.h5 --save_path ../../../lstm-mutants --num 100 --operator 12 --layer_type lstm --layer_name lstm_1 --ratio 0.05 --gate_type 0 --standard_deviation 0.1

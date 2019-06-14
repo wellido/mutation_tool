@@ -51,10 +51,10 @@ def sort_data(ori_model_path, mutants_path, x, y, save_path):
 
 if __name__ == '__main__':
     ori_model_path = "../../models/mnist_lenet5.h5"
-    mutants_path = "../../../lenet5-mutants"
+    mutants_path = "../../../lenet5-mutants2"
     (_, __,), (x_test, y_test) = mnist.load_data()
     x_test = x_test.astype('float32')
     x_test = x_test / 255.
     x_test = x_test.reshape(len(x_test), 28, 28, 1)
-    save_path = "../../result/test.npz"
+    save_path = "../../result/lenet5-gf-0.05.npz"
     sort_data(ori_model_path, mutants_path, x_test, y_test, save_path)
