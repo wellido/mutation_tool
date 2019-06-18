@@ -1,4 +1,4 @@
-# RNNMutaion
+# RNN-Mutaion
 Mutatuion analysis for RNN (LSTM and GRU). 2 types of mutation strategies are supported, static and dynamic. Static: mutate model weights and generate mutated model. Dynamic: mutate state at running time.
 
 #### Mutants generation: src/runner.py
