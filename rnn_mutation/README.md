@@ -1,7 +1,8 @@
 # RNNMutaion
-Mutatuion analysis for RNN (LSTM and GRU). 2 types of mutation strategies are surported, static and dynamic. Static: mutate model weights and generate mutated model. Dynamic: mutate state at running time.  
+Mutatuion analysis for RNN (LSTM and GRU). 2 types of mutation strategies are supported, static and dynamic. Static: mutate model weights and generate mutated model. Dynamic: mutate state at running time.
 
-#### How to use. File: src/runner.py
+#### Mutants generation
+file: src/runner.py
 #### Parameter
 * operator_type: static or dynamic
 * model_path: original model path 
@@ -23,11 +24,11 @@ Mutatuion analysis for RNN (LSTM and GRU). 2 types of mutation strategies are su
 
 #### static testing example:
 ```
-python runner.py --operator_type static --model_path ../models/imdb_gru.h5 --save_path ../generated_model --operator 8 --layer_type gru --layer_name gru_1 --ratio 0.30 --gate_type 4 --standard_deviation 0.1 --num 1 --acc_threshold 0.7725
+python runner.py --operator_type static --model_path ../../models/imdb_lstm.h5 --save_path ../../../lstm-mutants --num 100 --operator 10 --layer_type lstm --layer_name lstm_1 --ratio 0.01 --gate_type 0 --standard_deviation 0.1
 ```
 #### dynamic testing example:
 ```
-python runner.py --operator_type dynamic --model_path ../models/imdb_lstm.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path ../data/select_data.npz --standard_deviation 1.0 --precision_num 1 --time_stop_step 40 --csv_path "../result/test.csv"
+python runner.py --operator_type dynamic --model_path ../../models/imdb_lstm.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path ../../data/select_data.npz --standard_deviation 1.0 --precision_num 1 --time_stop_step 78 --csv_path "../../result/test.csv"
 ```
 
 #### mutation operator:
