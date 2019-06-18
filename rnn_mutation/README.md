@@ -56,4 +56,11 @@ python runner.py --operator_type dynamic --model_path ../../models/imdb_lstm.h5 
 1. reset
 2. cell candidate
 3. all gates
+
+#### Segment sort
+file: src/sort_segment.py
+#### Parameter
+* file_list: scv file name list (save segment difference results)
+* column: data column
+
   
