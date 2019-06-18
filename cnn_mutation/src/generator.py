@@ -28,23 +28,31 @@ def cnn_mutants_generation(ori_model, operator, ratio, standard_deviation=0.5):
 
 def generator():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_path", type=str,
+    parser.add_argument("--model_path", "-model_path",
+                        type=str,
                         help="ori model path")
-    parser.add_argument("--data_type", type=str,
+    parser.add_argument("--data_type", "-data_type",
+                        type=str,
                         help="mnist or cifar-10")
-    parser.add_argument("--operator", type=int,
+    parser.add_argument("--operator", "-operator",
+                        type=int,
                         help="mutator")
-    parser.add_argument("--ratio", type=float,
+    parser.add_argument("--ratio", "-ratio",
+                        type=float,
                         help="mutation ratio")
-    parser.add_argument("--save_path", type=str,
+    parser.add_argument("--save_path", "-save_path",
+                        type=str,
                         help="mutants save path")
-    parser.add_argument("--threshold", type=float,
+    parser.add_argument("--threshold", "-threshold",
+                        type=float,
                         default=0.9,
                         help="ori acc * threshold must > mutants acc")
-    parser.add_argument("--num", type=int,
+    parser.add_argument("--num", "-num",
+                        type=int,
                         default=1,
                         help="mutants number")
-    parser.add_argument("--standard_deviation", type=float,
+    parser.add_argument("--standard_deviation", "-standard_deviation",
+                        type=float,
                         default=0.5,
                         help="standard deviation for gaussian fuzzing")
     args = parser.parse_args()

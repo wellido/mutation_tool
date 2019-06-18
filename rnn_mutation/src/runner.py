@@ -127,39 +127,64 @@ def static_runner(model_path, save_path, mutant_operator, layer_type, layer_name
 
 def run():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--operator_type", type=str,
+    parser.add_argument("--operator_type", "-operator_type",
+                        type=str,
                         help="static or dynamic")
-    parser.add_argument("--model_path", type=str,
+    parser.add_argument("--model_path", "-model_path",
+                        type=str,
                         help="model path")
-    parser.add_argument("--save_path", type=str,
+    parser.add_argument("--save_path", "-save_path",
+                        type=str,
                         help="model save path")
-    parser.add_argument("--operator", type=int,
+    parser.add_argument("--operator", "-operator",
+                        type=int,
                         help="operator")
-    parser.add_argument("--single_data_path", type=str, default=" ",
+    parser.add_argument("--single_data_path", "-single_data_path",
+                        type=str,
+                        default=" ",
                         help=".npz file path which save the selected data")
-    parser.add_argument("--layer_type", type=str,
+    parser.add_argument("--layer_type", "-layer_type",
+                        type=str,
                         help="lstm or gru")
-    parser.add_argument("--layer_name", type=str,
+    parser.add_argument("--layer_name", "-layer_name",
+                        type=str,
                         help="layer name")
-    parser.add_argument("--rnn_cell_index", type=int,
+    parser.add_argument("--rnn_cell_index", "-rnn_cell_index",
+                        type=int,
                         help="the index of rnn layer out of all rnn layers")
-    parser.add_argument("--ratio", type=float, default=0.01,
+    parser.add_argument("--ratio", "-ratio",
+                        type=float,
+                        default=0.01,
                         help="mutation ratio")
-    parser.add_argument("--gate_type", type=int, default=0,
+    parser.add_argument("--gate_type", "-gate_type",
+                        type=int,
+                        default=0,
                         help="gate type selected")
-    parser.add_argument("--precision_num", type=int, default=0,
+    parser.add_argument("--precision_num", "-precision_num",
+                        type=int,
+                        default=0,
                         help="precision number remain")
-    parser.add_argument("--standard_deviation", type=float, default=0.0,
+    parser.add_argument("--standard_deviation", "-standard_deviation",
+                        type=float,
+                        default=0.0,
                         help="standard deviation")
-    parser.add_argument("--time_stop_step", type=int, default=0,
+    parser.add_argument("--time_stop_step", "-time_stop_step",
+                        type=int,
+                        default=0,
                         help="stop at witch time step")
-    parser.add_argument("--time_start_step", type=int, default=0,
+    parser.add_argument("--time_start_step", "-time_start_step",
+                        type=int,
+                        default=0,
                         help="re-start at witch time step")
-    parser.add_argument("--csv_path", type=str,
+    parser.add_argument("--csv_path", "-csv_path",
+                        type=str,
                         help="save the results")
-    parser.add_argument("--num", type=int,
+    parser.add_argument("--num", "-num",
+                        type=int,
                         help="number of mutant")
-    parser.add_argument("--acc_threshold", type=float, default=0.8,
+    parser.add_argument("--acc_threshold", "-acc_threshold",
+                        type=float,
+                        default=0.8,
                         help="mutated model acc threshold")
 
     args = parser.parse_args()
@@ -250,5 +275,5 @@ def run():
 if __name__ == '__main__':
     run()
     # python runner.py --operator_type static --model_path ../../models/imdb_lstm.h5 --save_path ../../../lstm-mutants --num 100 --operator 10 --layer_type lstm --layer_name lstm_1 --ratio 0.01 --gate_type 0 --standard_deviation 0.1
-    # python runner.py --operator_type dynamic --model_path ../../models/imdb_lstm.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 1 --single_data_path ../../data/select_data.npz --standard_deviation 1.0 --precision_num 1 --time_stop_step 78 --csv_path "../../result/test.csv"
+    # python runner.py -operator_type dynamic -model_path ../../models/imdb_lstm.h5 -layer_type lstm -layer_name lstm_1 -rnn_cell_index 1 --operator 1 -single_data_path ../../data/select_data.npz -standard_deviation 1.0 -precision_num 1 -time_stop_step 78 -csv_path "../../result/test.csv"
     # python runner.py --operator_type dynamic --model_path ../../models/imdb_lstm.h5 --layer_type lstm --layer_name lstm_1 --rnn_cell_index 1 --operator 2 --single_data_path ../../data/select_data.npz --standard_deviation 1.0 --precision_num 1 --time_start_step 70 --time_stop_step 78 --csv_path "../../result/test.csv"
