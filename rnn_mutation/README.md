@@ -1,26 +1,40 @@
 # RNNMutaion
 Mutatuion analysis for RNN (LSTM and GRU). 2 types of mutation strategies are supported, static and dynamic. Static: mutate model weights and generate mutated model. Dynamic: mutate state at running time.
 
-#### Mutants generation
-file: src/runner.py
-#### Parameter
-* operator_type: static or dynamic
-* model_path: original model path 
-* save_path: model save path (static)
-* operator: operator select
-* single_data_path: dynamic time step mutation data (dynamic)
-* layer_type: lstm or gru
-* layer_name: lstm layer name
-* rnn_cell_index: mutant rnn layer index out all rnn layers (dynamic)
-* ratio: mutant ratio, default 0.01 
-* gate_type: gate type, default 0
-* precision_num: precision remain number, default 0
-* standard_deviation: for gaussian fuzzing, default 0.0 
-* time_stop_step: stop at which time step, default 0 (dynamic)
-* time_start_step: re-start at which time step (for operator state reset), default 0 (dynamic)
-* csv_path: dynamic testing results save path (static)
-* num: index of mutants (static)
-* acc_threshold: accuracy threshold
+#### Mutants generation: src/runner.py
+
+```
+python runner.py [-operator_type STRING] [-model_path FILE] [-save_path DIR] [-operator INT]
+                 [-single_data_path FILE] [-layer_type STRING] [-layer_name STRING]
+                 [-rnn_cell_index INT] [-ratio FLOAT] [-gate_type INT] [-precision_num INT]
+                 [-standard_deviation FLOAT] [-time_stop_step INT] [-time_start_step INT]
+                 [-csv_path FILE] [-num INT] [-acc_threshold FLOAT]
+                 
+optional arguments:
+-operator_type: static or dynamic
+-model_path: original model path 
+-save_path: model save path (static)
+-operator: operator select
+-single_data_path: dynamic time step mutation data (dynamic)
+-layer_type: lstm or gru
+-layer_name: lstm layer name
+-rnn_cell_index: mutant rnn layer index out all rnn layers (dynamic)
+-ratio: mutant ratio, default 0.01 
+-gate_type: gate type, default 0
+                      LSTM gate type:   GRU gate type:
+                        0. input             0. update
+                        1. forget            1. reset
+                        2. cell candidate    2. cell candidate
+                        3. output            3. all gates
+                        4. all gates 
+-precision_num: precision remain number, default 0
+-standard_deviation: for gaussian fuzzing, default 0.0 
+-time_stop_step: stop at which time step, default 0 (dynamic)
+-time_start_step: re-start at which time step (for operator state reset), default 0 (dynamic)
+-csv_path: dynamic testing results save path (static)
+-num: index of mutants (static)
+-acc_threshold: accuracy threshold
+```
 
 #### static testing example:
 ```
@@ -45,22 +59,4 @@ python runner.py --operator_type dynamic --model_path ../../models/imdb_lstm.h5 
 11. weight quantization
 12. weight precision reduction
 
-#### LSTM gate type:
-0. input
-1. forget
-2. cell candidate
-3. output
-4. all gates
-#### GRU gate type:
-0. update
-1. reset
-2. cell candidate
-3. all gates
 
-#### Segment sort
-file: src/sort_segment.py
-#### Parameter
-* file_list: scv file name list (save segment difference results)
-* column: data column
-
-  
