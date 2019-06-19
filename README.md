@@ -1,8 +1,12 @@
-# mutation_tool
+# DeepMutation++
+
 
 #### this mutation tool supports for both CNN and RNN models
 ##### CNN mutation tool -> folder: cnn_mutation
 ##### RNN mutation tool -> folder: rnn_mutation
+
+# Overview
+![alt text](img/overview.jpg)
 
 
 # project structure
@@ -18,6 +22,7 @@
 │   ├── __init__.py               #
 │   ├── README.md                 # 
 ├── data                          # save some test data
+├── img                           # save imgs
 ├── models                        # save some test models
 ├── result                        # save some test results
 ├── rnn_mutation                  # rnn mutation folder
