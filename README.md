@@ -1,7 +1,8 @@
 # DeepMutation++
 
+DeepMutaion++ is a mutation testing framework for deep learning systems implemented in Python3.6 with TensorFlow1.13 and Keras2.2.4 . 
+DeepMutaion++ supports both FNN and RNN mutants generation and can be used to analyze analyze the robustness of a DNN model against the input as a whole. Moreover, it allows to identify the vulnerable segment of a sequential input.
 
-#### this mutation tool supports for both CNN and RNN models
 ##### CNN mutation tool -> folder: cnn_mutation
 ##### RNN mutation tool -> folder: rnn_mutation
 
