@@ -163,78 +163,28 @@ def gru_not_stateful_state_reset(model, layer_name, rnn_cell_index, x_test, time
     :param time_start_step:
     :return:
     """
-    if len(x_test) == 1:
-        x_test = x_test[0]
-        original_result = model.predict(x_test.reshape(1, 80))
-        layer_index = return_layer_index(model.layers, layer_name)
-        new_model = Model(inputs=model.input, outputs=model.layers[layer_index].output)
-        input_length = len(x_test)
-        x_time_stop = x_test[:time_stop_step].reshape(1, time_stop_step)
-        x_time_stop_result = new_model.predict(x_time_stop)
-        initial_state = x_time_stop_result[1][0]
-        x_time_start = x_test[:time_start_step].reshape(1, time_start_step)
-        x_time_start_result = new_model.predict(x_time_start)
-        initial_cell = x_time_start_result[0][0]
-        ss.hidden_state = initial_state
-        ss.hidden_cell = initial_cell
-        recurrent.global_special_regulation(1)
-        recurrent.rnn_cell_index_set(rnn_cell_index)
-        model_weights = model.get_weights()
-        model_config = model.get_config()
-        new_initial_model = Model.from_config(model_config)
-        new_initial_model.set_weights(model_weights)
-        x_back_part = x_test[time_start_step:].reshape(1, input_length - time_start_step)
-        new_result = new_initial_model.predict(x_back_part)
-        return original_result, new_result
-    elif len(x_test) == 2:
-        if rnn_cell_index == 1:
-            xq_test = x_test[1]
-            x_test = x_test[0]
-            original_result = model.predict([x_test.reshape(1, 552), xq_test.reshape(1, 5)])
-            layer_index = return_layer_index(model.layers, layer_name)
-            new_model = Model(inputs=model.input, outputs=model.layers[layer_index].output)
-            input_length = len(x_test)
-            x_time_stop = x_test[:time_stop_step].reshape(1, time_stop_step)
-            x_time_stop_result = new_model.predict([x_time_stop, xq_test])
-            initial_state = x_time_stop_result[1][0]
-            x_time_start = x_test[:time_start_step].reshape(1, time_start_step)
-            x_time_start_result = new_model.predict([x_time_start, xq_test])
-            initial_cell = x_time_start_result[0][0]
-            ss.hidden_state = initial_state
-            ss.hidden_cell = initial_cell
-            recurrent.global_special_regulation(1)
-            recurrent.rnn_cell_index_set(rnn_cell_index)
-            model_weights = model.get_weights()
-            model_config = model.get_config()
-            new_initial_model = Model.from_config(model_config)
-            new_initial_model.set_weights(model_weights)
-            x_back_part = x_test[time_start_step:].reshape(1, input_length - time_start_step)
-            new_result = new_initial_model.predict([x_back_part, xq_test])
-            return original_result, new_result
-        elif rnn_cell_index == 2:
-            xq_test = x_test[1]
-            x_test = x_test[0]
-            original_result = model.predict([x_test.reshape(1, 552), xq_test.reshape(1, 5)])
-            layer_index = return_layer_index(model.layers, layer_name)
-            new_model = Model(inputs=model.input, outputs=model.layers[layer_index].output)
-            input_length = len(xq_test)
-            x_time_stop = xq_test[:time_stop_step].reshape(1, time_stop_step)
-            x_time_stop_result = new_model.predict([x_test, x_time_stop])
-            initial_state = x_time_stop_result[1][0]
-            x_time_start = xq_test[:time_start_step].reshape(1, time_start_step)
-            x_time_start_result = new_model.predict([x_test, x_time_start])
-            initial_cell = x_time_start_result[0][0]
-            ss.hidden_state = initial_state
-            ss.hidden_cell = initial_cell
-            recurrent.global_special_regulation(1)
-            recurrent.rnn_cell_index_set(rnn_cell_index)
-            model_weights = model.get_weights()
-            model_config = model.get_config()
-            new_initial_model = Model.from_config(model_config)
-            new_initial_model.set_weights(model_weights)
-            x_back_part = xq_test[time_start_step:].reshape(1, input_length - time_start_step)
-            new_result = new_initial_model.predict([x_test, x_back_part])
-            return original_result, new_result
+    original_result = model.predict(x_test)
+    layer_index = return_layer_index(model.layers, layer_name)
+    x_test = x_test.flatten()
+    new_model = Model(inputs=model.input, outputs=model.layers[layer_index].output)
+    input_length = len(x_test)
+    x_time_stop = x_test[:time_stop_step].reshape(1, time_stop_step)
+    x_time_stop_result = new_model.predict(x_time_stop)
+    initial_state = x_time_stop_result[1][0]
+    x_time_start = x_test[:time_start_step].reshape(1, time_start_step)
+    x_time_start_result = new_model.predict(x_time_start)
+    initial_cell = x_time_start_result[0][0]
+    ss.hidden_state = initial_state
+    ss.hidden_cell = initial_cell
+    recurrent.global_special_regulation(1)
+    recurrent.rnn_cell_index_set(rnn_cell_index)
+    model_weights = model.get_weights()
+    model_config = model.get_config()
+    new_initial_model = Model.from_config(model_config)
+    new_initial_model.set_weights(model_weights)
+    x_back_part = x_test[time_start_step:].reshape(1, input_length - time_start_step)
+    new_result = new_initial_model.predict(x_back_part)
+    return original_result, new_result
 
 
 def gru_not_stateful_state_status_process(model, layer_name, rnn_cell_index, x_test, time_stop_step, op,
@@ -253,96 +203,35 @@ def gru_not_stateful_state_status_process(model, layer_name, rnn_cell_index, x_t
     :param precision_num
     :return:
     """
-    if len(x_test) == 1:
-        x_test = x_test[0]
-        original_result = model.predict(x_test.reshape(1, 80))
-        layer_index = return_layer_index(model.layers, layer_name)
-        new_model = Model(inputs=model.input, outputs=model.layers[layer_index].output)
-        input_length = len(x_test)
-        x_front_part = x_test[:time_stop_step].reshape(1, time_stop_step)
-        x_back_part = x_test[time_stop_step:].reshape(1, input_length - time_stop_step)
-        x_front_result = new_model.predict(x_front_part)
-        initial_state = x_front_result[0][0]
-        initial_cell = x_front_result[1][0]
-        if op == 1:
-            initial_cell = initial_cell * 0
-        elif op == 3:
-            fuzz = np.random.normal(loc=0.0, scale=standard_deviation, size=None)
-            initial_cell = initial_cell * (fuzz + 1)
-        else:
-            initial_cell = [round(x, precision_num) for x in initial_cell]
-            initial_cell = np.asarray(initial_cell)
-        ss.hidden_state = initial_state
-        ss.hidden_cell = initial_cell
-        recurrent.global_special_regulation(1)
-        recurrent.rnn_cell_index_set(rnn_cell_index)
-        model_weights = model.get_weights()
-        model_config = model.get_config()
-        new_initial_model = Model.from_config(model_config)
-        new_initial_model.set_weights(model_weights)
-        new_result = new_initial_model.predict(x_back_part)
-        return original_result, new_result
-    elif len(x_test) == 2:
-        if rnn_cell_index == 1:
-            xq_test = x_test[1]
-            x_test = x_test[0]
-            original_result = model.predict([x_test.reshape(1, 552), xq_test.reshape(1, 5)])
-            layer_index = return_layer_index(model.layers, layer_name)
-            new_model = Model(inputs=model.input, outputs=model.layers[layer_index].output)
-            input_length = len(x_test)
-            x_front_part = x_test[:time_stop_step].reshape(1, time_stop_step)
-            x_back_part = x_test[time_stop_step:].reshape(1, input_length - time_stop_step)
-            x_front_result = new_model.predict([x_front_part, xq_test])
-            initial_state = x_front_result[0][0]
-            initial_cell = x_front_result[1][0]
-            if op == 1:
-                initial_cell = initial_cell * 0
-            elif op == 3:
-                fuzz = np.random.normal(loc=0.0, scale=standard_deviation, size=None)
-                initial_cell = initial_cell * (fuzz + 1)
-            else:
-                initial_cell = [round(x, precision_num) for x in initial_cell]
-                initial_cell = np.asarray(initial_cell)
-            ss.hidden_state = initial_state
-            ss.hidden_cell = initial_cell
-            recurrent.global_special_regulation(1)
-            recurrent.rnn_cell_index_set(rnn_cell_index)
-            model_weights = model.get_weights()
-            model_config = model.get_config()
-            new_initial_model = Model.from_config(model_config)
-            new_initial_model.set_weights(model_weights)
-            new_result = new_initial_model.predict([x_back_part, xq_test])
-            return original_result, new_result
-        elif rnn_cell_index == 2:
-            xq_test = x_test[1]
-            x_test = x_test[0]
-            original_result = model.predict([x_test.reshape(1, 552), xq_test.reshape(1, 5)])
-            layer_index = return_layer_index(model.layers, layer_name)
-            new_model = Model(inputs=model.input, outputs=model.layers[layer_index].output)
-            input_length = len(xq_test)
-            x_front_part = xq_test[:time_stop_step].reshape(1, time_stop_step)
-            x_back_part = xq_test[time_stop_step:].reshape(1, input_length - time_stop_step)
-            x_front_result = new_model.predict([x_test, x_front_part])
-            initial_state = x_front_result[0][0]
-            initial_cell = x_front_result[1][0]
-            if op == 1:
-                initial_cell = initial_cell * 0
-            elif op == 3:
-                fuzz = np.random.normal(loc=0.0, scale=standard_deviation, size=None)
-                initial_cell = initial_cell * (fuzz + 1)
-            else:
-                initial_cell = [round(x, precision_num) for x in initial_cell]
-                initial_cell = np.asarray(initial_cell)
-            ss.hidden_state = initial_state
-            ss.hidden_cell = initial_cell
-            recurrent.global_special_regulation(1)
-            recurrent.rnn_cell_index_set(rnn_cell_index)
-            model_weights = model.get_weights()
-            model_config = model.get_config()
-            new_initial_model = Model.from_config(model_config)
-            new_initial_model.set_weights(model_weights)
-            new_result = new_initial_model.predict([x_test, x_back_part])
-            return original_result, new_result
+
+    original_result = model.predict(x_test)
+    layer_index = return_layer_index(model.layers, layer_name)
+    x_test = x_test.flatten()
+    new_model = Model(inputs=model.input, outputs=model.layers[layer_index].output)
+    input_length = len(x_test)
+    x_front_part = x_test[:time_stop_step].reshape(1, time_stop_step)
+    x_back_part = x_test[time_stop_step:].reshape(1, input_length - time_stop_step)
+    x_front_result = new_model.predict(x_front_part)
+    initial_state = x_front_result[0][0]
+    initial_cell = x_front_result[1][0]
+    if op == 1:
+        initial_cell = initial_cell * 0
+    elif op == 3:
+        fuzz = np.random.normal(loc=0.0, scale=standard_deviation, size=None)
+        initial_cell = initial_cell * (fuzz + 1)
+    else:
+        initial_cell = [round(x, precision_num) for x in initial_cell]
+        initial_cell = np.asarray(initial_cell)
+    ss.hidden_state = initial_state
+    ss.hidden_cell = initial_cell
+    recurrent.global_special_regulation(1)
+    recurrent.rnn_cell_index_set(rnn_cell_index)
+    model_weights = model.get_weights()
+    model_config = model.get_config()
+    new_initial_model = Model.from_config(model_config)
+    new_initial_model.set_weights(model_weights)
+    new_result = new_initial_model.predict(x_back_part)
+    return original_result, new_result
 
 
 def return_gru_gate_name(int_gate):

@@ -31,11 +31,8 @@ def dynamic_runner(model_path, layer_name, rnn_cell_index, operation, data_path,
     """
     model = load_model(model_path)
     select_data = np.load(data_path)
-    x_test = list()
-    x_test.append(select_data["x_select"])
+    x_test = select_data
     start_time = time.clock()
-    if len(select_data) == 3:
-        x_test.append(select_data["xq_select"])
     if layer_type == "lstm":
         result = lstm_operator(model, layer_name, operation, x_test, rnn_cell_index=rnn_cell_index, time_stop_step=time_stop_step,
                                gate_type=gate_type, ratio=ratio, time_start_step=time_start_step, batch_size=batch_size,
