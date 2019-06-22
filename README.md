@@ -15,7 +15,7 @@ DeepMutaion++ supports both FNN and RNN mutants generation and can be used to an
 ├── cnn_mutation                  # cnn mutation folder
 │   ├── src                       # code folder
 │   │   ├── cnn_operator.py       # define cnn mutation operators
-│   │   ├── data_sort.py          # sort data by mutants killed number
+│   │   ├── data_sort.py          # sort data by KS1
 │   │   ├── generator.py          # mutants generator
 │   │   ├── run.sh                # shell for test
 │   │   ├── utils.py              # some useful functions
@@ -35,7 +35,7 @@ DeepMutaion++ supports both FNN and RNN mutants generation and can be used to an
 │   │   ├── lstm_operator.py      # define lstm mutation operators
 │   │   ├── run.sh                # shell for test
 │   │   ├── runner.py             # mutants generator
-│   │   ├── sort_segment.py       # sort segment by distance
+│   │   ├── sort_segment.py       # sort segment by KS2
 │   │   ├── state_save.py         # save state
 │   │   ├── utils.py              # some useful functions
 │   ├── README.md                 #
