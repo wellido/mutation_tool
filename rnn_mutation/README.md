@@ -6,7 +6,7 @@ Mutatuion analysis for RNN (LSTM and GRU). 2 types of mutation strategies are su
 ```
 python runner.py [-operator_type STRING] [-model_path FILE] [-save_path DIR] [-operator INT]
                  [-single_data_path FILE] [-layer_type STRING] [-layer_name STRING]
-                 [-rnn_cell_index INT] [-ratio FLOAT] [-gate_type INT] [-precision_num INT]
+                 [-ratio FLOAT] [-gate_type INT] [-precision_num INT]
                  [-standard_deviation FLOAT] [-time_stop_step INT] [-time_start_step INT]
                  [-csv_path FILE] [-num INT] [-acc_threshold FLOAT]
                  
