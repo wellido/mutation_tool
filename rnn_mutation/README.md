@@ -18,7 +18,6 @@ optional arguments:
 -single_data_path:      dynamic time step mutation data (dynamic)
 -layer_type:            lstm or gru
 -layer_name:            lstm layer name
--rnn_cell_index:        mutant rnn layer index out all rnn layers (dynamic)
 -ratio:                 mutant ratio, default 0.01 
 -gate_type:             gate type, default 0
                                   LSTM gate type:   GRU gate type:
