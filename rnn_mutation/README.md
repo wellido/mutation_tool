@@ -6,7 +6,7 @@ Mutatuion analysis for RNN (LSTM and GRU). 2 types of mutation strategies are su
 ```
 python runner.py [-operator_type STRING] [-model_path FILE] [-save_path DIR] [-operator INT]
                  [-single_data_path FILE] [-layer_type STRING] [-layer_name STRING]
-                 [-rnn_cell_index INT] [-ratio FLOAT] [-gate_type INT] [-precision_num INT]
+                 [-ratio FLOAT] [-gate_type INT] [-precision_num INT]
                  [-standard_deviation FLOAT] [-time_stop_step INT] [-time_start_step INT]
                  [-csv_path FILE] [-num INT] [-acc_threshold FLOAT]
                  
@@ -18,7 +18,6 @@ optional arguments:
 -single_data_path:      dynamic time step mutation data (dynamic)
 -layer_type:            lstm or gru
 -layer_name:            lstm layer name
--rnn_cell_index:        mutant rnn layer index out all rnn layers (dynamic)
 -ratio:                 mutant ratio, default 0.01 
 -gate_type:             gate type, default 0
                                   LSTM gate type:   GRU gate type:
