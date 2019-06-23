@@ -99,7 +99,6 @@ def generator():
         new_acc = model_predict(new_model, x_test, y_test)
         if new_acc < threshold:
             K.clear_session()
-            del model
             del new_model
             gc.collect()
             continue
