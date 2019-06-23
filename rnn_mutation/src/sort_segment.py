@@ -1,5 +1,7 @@
 import csv
 import numpy as np
+from drawer import *
+import argparse
 
 
 def read_csv(csv_path):
@@ -19,11 +21,12 @@ def read_csv(csv_path):
     return result
 
 
-def influence_analyze(file_list, column):
+def influence_analyze(file_list, column, save_path):
     """
 
     :param file_list:
     :param column:
+    :param save_path:
     :return:
     """
     distance_list = []
@@ -43,13 +46,39 @@ def influence_analyze(file_list, column):
         avg_distance = distance_list[0]
     all_distance_np = np.asarray(avg_distance)
     sort_list = np.argsort(all_distance_np)
-    print("after sorting time step: ", sort_list)
+    # print("after sorting time step: ", sort_list)
+    np.savez(save_path + "KS2.npz", index=sort_list)
+    draw(avg_distance, save_path)
+    print("completed.")
+
+
+def run():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--csv_path", "-csv_path",
+                        type=str,
+                        help="csv path")
+    parser.add_argument("--save_path", "-save_path",
+                        type=str,
+                        help="save path")
+    parser.add_argument("--column", "-column",
+                        type=int,
+                        help="column")
+    args = parser.parse_args()
+    csv_path = []
+    csv_path.append(args.csv_path)
+    save_path = args.save_path
+    column = args.column
+    influence_analyze(csv_path, column, save_path)
 
 
 if __name__ == '__main__':
-    csv_path = ["../../result/test.csv"]
-    # result = read_csv(csv_path)
-    # # print(read_csv(csv_path))
-    # distance_1 = [float(x[2]) for x in result]
-    # print(distance_1)
-    influence_analyze(csv_path, 2)
+    run()
+    # csv_path = ["../../result/imdb_lstm_gf_data2_0.1.csv"]
+    # # result = read_csv(csv_path)
+    # # # print(read_csv(csv_path))
+    # # distance_1 = [float(x[2]) for x in result]
+    # # print(distance_1)
+    # save_path = "../../result/"
+    # influence_analyze(csv_path, 4)
+
+# python sort_segment.py -csv_path ../../result/imdb_lstm_gf_data2_0.1.csv -save_path ../../result/ -column 4

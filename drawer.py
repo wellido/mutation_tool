@@ -61,10 +61,10 @@ plt.ylabel("number", fontsize=15)
 参数一：中点坐标
 参数二：显示值
 """
-plt.xticks([index + 0.2 for index in x], label_list)
+plt.xticks([index for index in x], label_list)
 plt.xlabel("killed number range", fontsize=15)
 # plt.title("某某公司")
-plt.legend()     # 设置题注
+plt.legend()
 # 编辑文本
 for rect in rects1:
     height = rect.get_height()
