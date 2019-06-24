@@ -1,7 +1,7 @@
 # RNN-Mutaion
 Mutatuion analysis for RNN (LSTM and GRU). 2 types of mutation strategies are supported, static and dynamic. Static: mutate model weights and generate mutated model. Dynamic: mutate state at running time.
 
-#### Mutants generation: src/runner.py
+### Mutants generation: src/runner.py
 
 ```
 python runner.py [-operator_type STRING] [-model_path FILE] [-save_path DIR] [-operator INT]
@@ -57,5 +57,14 @@ python runner.py --operator_type dynamic --model_path ../../models/imdb_lstm.h5 
 10. weight gaussian fuzzing
 11. weight quantization
 12. weight precision reduction
+
+### Segment sort: src/sort_segment.py
+```
+python sort_segment.py [-csv_path FILE] [-save_path FILE] [-column INT]
+optional arguments:
+-csv_path: the scv file path which saves the results
+-save_path: path of the report
+-column: data is stored in which column
+```
 
 
