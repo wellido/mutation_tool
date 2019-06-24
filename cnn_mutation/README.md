@@ -32,3 +32,19 @@ optional arguments:
 ```
 python generator.py --model_path models/mnist_lenet5.h5 --operator 0 --ratio 0.01 --save_path ../mutants --num 2 --data_type mnist --threshold 0.9
 ```
+
+#### Sort and generate report
+```
+API  sort_data(ori_model_path, mutants_path, x, y, save_path)
+      """
+      :param ori_model_path: path of the original model
+      :param mutants_path: path of the mutants folder
+      :param x: test data
+      :param y: label of x
+      :param save_path: report save path
+      """
+Directly use 
+      python sort_data.py [-model_path FILE] [-mutants_path FOLDER] [-model_path FILE]
+will use MNIST data default.
+
+```
