@@ -73,13 +73,13 @@ def get_type_layers(model):
     flatten_layer_list = []
     for layer in model.layers:
         # choose dense, convolution and flatten layer
-        if isinstance(layer, keras.layers.core.Dense):
+        if isinstance(layer, keras.layers.Dense):
             dense_layer_list.append(layer.name)
             dense_con_layer_list.append(layer.name)
-        elif isinstance(layer, keras.layers.convolutional._Conv):
+        elif isinstance(layer, keras.layers.Conv1D):
             convolution_layer_list.append(layer.name)
             dense_con_layer_list.append(layer.name)
-        elif isinstance(layer, keras.layers.core.Flatten):
+        elif isinstance(layer, keras.layers.Flatten):
             flatten_layer_list.append(layer.name)
     return dense_layer_list, convolution_layer_list, dense_con_layer_list, flatten_layer_list
 
@@ -181,7 +181,7 @@ def summary_model(model):
     neuron_count = 0
     for layer in model.layers:
         # we only calculate dense later and conv layer
-        if isinstance(layer, keras.layers.core.Dense) or isinstance(layer, keras.layers.convolutional._Conv):
+        if isinstance(layer, keras.layers.Dense) or isinstance(layer, keras.layers.Conv1D):
             w_n = layer.get_weights()[0].size
             n_n = layer.output_shape[-1]
             weight_count += w_n

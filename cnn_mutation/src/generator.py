@@ -75,12 +75,12 @@ def generator():
         x_train, x_test = color_preprocessing(x_train, x_test, [125.307, 122.95, 113.865], [62.9932, 62.0887, 66.7048])
 
     model = load_model(model_path)
-    ori_acc = model_predict(model, x_test, y_test)
-    threshold = ori_acc * threshold
+    # ori_acc = model_predict(model, x_test, y_test)
+    # threshold = ori_acc * threshold
     weight_count, neuron_count, weights_dict, neuron_dict = summary_model(model)
     print(colored("operator: %s" % cnn_operator_name(operator), 'blue'))
-    print(colored("ori acc: %f" % ori_acc, 'blue'))
-    print(colored("threshold acc: %f" % threshold, 'blue'))
+    # print(colored("ori acc: %f" % ori_acc, 'blue'))
+    # print(colored("threshold acc: %f" % threshold, 'blue'))
     if operator == 0 or operator == 1:
         print("total weights: ", weight_count)
         print("process weights num: ", int(weight_count * ratio) if int(weight_count * ratio) > 0 else 1)
@@ -96,12 +96,12 @@ def generator():
         if i != 1:
             model = load_model(model_path)
         new_model = cnn_mutants_generation(model, operator, ratio, standard_deviation)
-        new_acc = model_predict(new_model, x_test, y_test)
-        if new_acc < threshold:
-            K.clear_session()
-            del new_model
-            gc.collect()
-            continue
+        # new_acc = model_predict(new_model, x_test, y_test)
+        # if new_acc < threshold:
+        #     K.clear_session()
+        #     del new_model
+        #     gc.collect()
+        #     continue
         final_path = save_path + "/" + cnn_operator_name(operator) + "_" + str(ratio) + "_" + str(i) + ".h5"
         new_model.save(final_path)
         p_bar.update(int((i / num) * 100))
@@ -118,5 +118,5 @@ def generator():
 if __name__ == '__main__':
     generator()
 
-# python generator.py --model_path ../../models/mnist_lenet5.h5 --operator 0 --ratio 0.01 --save_path ../../mutants --num 2
+# python generator.py --model_path ../../models/dropout_model.h5 --operator 0 --ratio 0.01 --save_path ../../mutants --num 2
 
