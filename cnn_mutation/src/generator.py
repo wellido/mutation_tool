@@ -118,5 +118,5 @@ def generator():
 if __name__ == '__main__':
     generator()
 
-# python generator.py --model_path ../../models/dropout_model.h5 --operator 0 --ratio 0.01 --save_path ../../mutants --num 2
+# python generator.py --model_path ../../models/ori_model.h5 --operator 0 --ratio 0.05 --save_path ../../mutants --num 50
 
