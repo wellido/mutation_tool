@@ -1,7 +1,7 @@
 import numpy as np
-from keras.utils import np_utils
+from tensorflow.keras.utils import to_categorical
 import random
-import keras
+from tensorflow import keras
 
 
 def color_preprocessing(x_train, x_test, mean, std):
@@ -131,13 +131,13 @@ def generate_correct_input(model, x_train, y_train, x_test, y_test, classlabel):
     # predict and save the correct index
     y_pred_model_train = model.predict(x_train)
     y_prediction_classes_model = np.argmax(y_pred_model_train, axis=1)
-    y_train = np_utils.to_categorical(y_train, classnum)
+    y_train = to_categorical(y_train, classnum)
     y_train_classes = np.argmax(y_train, axis=1)
     correct_train = np.where(y_prediction_classes_model == y_train_classes)[0]
 
     y_pred_model_test = model.predict(x_test)
     y_prediction_classes_model_test = np.argmax(y_pred_model_test, axis=1)
-    y_test = np_utils.to_categorical(y_test, classnum)
+    y_test = to_categorical(y_test, classnum)
     y_test_classes = np.argmax(y_test, axis=1)
     correct_test = np.where(y_prediction_classes_model_test == y_test_classes)[0]
     print(len(correct_train))
@@ -181,7 +181,7 @@ def summary_model(model):
     neuron_count = 0
     for layer in model.layers:
         # we only calculate dense later and conv layer
-        if isinstance(layer, keras.layers.Dense) or isinstance(layer, keras.layers.Conv1D):
+        if isinstance(layer, keras.layers.Dense) or isinstance(layer, keras.layers.Conv1D) or isinstance(layer, keras.layers.Conv2D):
             w_n = layer.get_weights()[0].size
             n_n = layer.output_shape[-1]
             weight_count += w_n

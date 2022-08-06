@@ -1,12 +1,16 @@
 from cnn_operator import *
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import argparse
 from utils import summary_model, color_preprocessing, model_predict
 from termcolor import colored
-from keras.datasets import mnist, cifar10
+from tensorflow.keras.datasets import mnist, cifar10
 import gc
-import keras.backend as K
+import tensorflow.keras.backend as K
 from progressbar import *
+import tensorflow as tf
+from tensorflow_addons.optimizers import SGDW
+import tensorflow_model_optimization as tfmot
+tf.keras.optimizers.SGDW = SGDW
 
 
 def cnn_mutants_generation(ori_model, operator, ratio, standard_deviation=0.5):
@@ -118,5 +122,10 @@ def generator():
 if __name__ == '__main__':
     generator()
 
-# python generator.py --model_path ../../models/ori_model.h5 --operator 0 --ratio 0.05 --save_path ../../mutants --num 50
+# python generator.py --model_path ../../models/lenet5.h5 --operator 0 --ratio 0.1 --save_path ../../mutants --num 50
 
+# CUDA_VISIBLE_DEVICES='' python generator.py --model_path /home/qhu/projects/TS4code/models/imagenet/densenet.h5 --operator 0 --ratio 0.1 --save_path /home/qhu/qhu-data/mutant_models/imagenet/densenet --num 50
+
+# CUDA_VISIBLE_DEVICES='' python generator.py --model_path /home/qhu/projects/TS4code/models/svhn/lenet5.h5 --operator 0 --ratio 0.1 --save_path /home/qhu/qhu-data/mutant_models/svhn/lenet5 --num 50
+
+# CUDA_VISIBLE_DEVICES='' python generator.py --model_path /home/qhu/projects/TS4code/models/svhn/nin.h5 --operator 0 --ratio 0.1 --save_path /home/qhu/qhu-data/mutant_models/svhn/nin --num 50

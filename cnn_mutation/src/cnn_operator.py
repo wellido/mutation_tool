@@ -1,7 +1,7 @@
-from keras.models import Sequential
+from tensorflow.keras.models import Sequential
 import numpy as np
 import random
-import keras
+from tensorflow import keras
 from utils import get_type_layers, find_sameshape_layer, summary_model
 
 
@@ -25,6 +25,8 @@ def cnn_operator(model, operator, ratio, standard_deviation=0.5):
     weight_count, neuron_count, weights_dict, neuron_dict = summary_model(model)
     process_weights_num = int(weight_count * ratio) if int(weight_count * ratio) > 0 else 1
     process_neuron_num = int(neuron_count * ratio) if int(neuron_count * ratio) > 0 else 1
+    # print(len(weight_count))
+    # print(process_weights_num)
     if operator == 0:
         # GF
         process_num_list = random_select(weight_count, process_weights_num, dense_con_layer_list, weights_dict)
